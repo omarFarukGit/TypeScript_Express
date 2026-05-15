@@ -14,6 +14,38 @@ const createUserIntoDB = async (payload: IUser) => {
   return result;
 };
 
+const getAllUsersFromDB = async () => {
+  const result = await pool.query(`
+            SELECT * FROM users
+            `);
+  return result;
+};
+
+const getSingleUserFromDB = async (id: string) => {
+  const result = await pool.query(
+    `
+            SELECT * FROM users WHERE id=$1
+            `,
+    [id],
+  );
+  return result;
+};
+
+const updateUserFromDB = async (payload: IUser, id: string) => {
+  const { name, password, age, is_active } = payload;
+  const result = await pool.query(
+    `
+           UPDATE users SET name=COALESCE($1, name)
+           ,password=$2,age=$3 ,is_active=$4 WHERE id=$5 RETURNING * 
+            `,
+    [name, password, age, is_active, id],
+  );
+  return result;
+};
+
 export const userService = {
   createUserIntoDB,
+  getAllUsersFromDB,
+  getSingleUserFromDB,
+  updateUserFromDB,
 };
