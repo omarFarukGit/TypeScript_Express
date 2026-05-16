@@ -17,7 +17,7 @@ app.post("/", (req: Request, res: Response) => {
   console.log(req.body);
 });
 
-app.use("api/users", uesrRoute);
+app.use("/api/users", uesrRoute);
 app.use("/api/profile", profileRoute);
 
 export default app;
