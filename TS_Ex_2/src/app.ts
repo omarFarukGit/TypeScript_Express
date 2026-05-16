@@ -4,6 +4,7 @@ import "dotenv/config";
 import { initDB, pool } from "./db";
 import { uesrRoute } from "./modules/user/user.route";
 import { profileRoute } from "./modules/profile/profile.route";
+import { authRouter } from "./modules/auth/auth.route";
 
 const app: Application = express();
 const port = 3000;
@@ -19,5 +20,6 @@ app.post("/", (req: Request, res: Response) => {
 
 app.use("/api/users", uesrRoute);
 app.use("/api/profile", profileRoute);
+app.use('/api/auth',authRouter)
 
 export default app;
