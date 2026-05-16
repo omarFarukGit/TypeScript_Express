@@ -3,6 +3,7 @@ import type { Application, Request, Response } from "express";
 import "dotenv/config";
 import { initDB, pool } from "./db";
 import { uesrRoute } from "./modules/user/user.route";
+import { profileRoute } from "./modules/profile/profile.route";
 
 const app: Application = express();
 const port = 3000;
@@ -16,8 +17,7 @@ app.post("/", (req: Request, res: Response) => {
   console.log(req.body);
 });
 
-app.use('api/users',uesrRoute)
+app.use("api/users", uesrRoute);
+app.use("/api/profile", profileRoute);
 
-
-
-export default app
+export default app;
