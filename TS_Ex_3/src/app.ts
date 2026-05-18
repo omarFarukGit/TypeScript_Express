@@ -5,11 +5,13 @@ import { initDB, pool } from "./db";
 import { uesrRoute } from "./modules/user/user.route";
 import { profileRoute } from "./modules/profile/profile.route";
 import { authRouter } from "./modules/auth/auth.route";
+import cookieParser from "cookie-parser";
 
 const app: Application = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
@@ -20,6 +22,6 @@ app.post("/", (req: Request, res: Response) => {
 
 app.use("/api/users", uesrRoute);
 app.use("/api/profile", profileRoute);
-app.use('/api/auth',authRouter)
+app.use("/api/auth", authRouter);
 
 export default app;
