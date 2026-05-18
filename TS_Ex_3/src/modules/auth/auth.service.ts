@@ -80,7 +80,7 @@ const generateResreshToken = async (token: string) => {
       role: user.role,
       is_active: user.is_active,
     };
-    const accessToken = jwt.sign(jwtPayload, "shflsfsfsecrectkeyrefresh", {
+    const accessToken = jwt.sign(jwtPayload, "shflsfsfsecrectkeyre", {
       expiresIn: "1d",
     });
     return accessToken;
