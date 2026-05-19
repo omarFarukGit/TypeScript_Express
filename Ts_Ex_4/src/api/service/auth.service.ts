@@ -1,5 +1,5 @@
 import { sql } from "../../db";
-import type { RUser } from "../../types";
+import type { RUser, User } from "../../types";
 import bcrypt from "bcrypt";
 
 class AtuhService {
@@ -14,6 +14,27 @@ class AtuhService {
         `;
     return res[0];
   }
+
+  async validateUser(email: string, password: string) {
+    const res = await sql`
+    SELECT * FROM users WHERE email=${email}
+    `;
+
+    if (!res.length) {
+      return null;
+    }
+    const { password_hash, ...user } = res[0] as User;
+    const isValid = await bcrypt.compare(password, password_hash);
+
+    return isValid ? user : null;
+  }
+
+  async getUserById(id:string){
+    const res=await sql`
+    SELECT id,name,email,age ,role FROM users WHERE id=${id}
+    `
+    return res[0] as RUser & {id:number}
+  }
 }
 
-export default new AtuhService
+export default new AtuhService();
