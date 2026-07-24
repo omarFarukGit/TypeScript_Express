@@ -9,6 +9,23 @@ const createToken = async (
   return token;
 };
 
+const verifyToken = (token: string, secret: string) => {
+  try {
+    const verifyToken = jwt.verify(token, secret);
+
+    return {
+      success: true,
+      data: verifyToken,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+};
+
 export const utils = {
   createToken,
+  verifyToken
 };
